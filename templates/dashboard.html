@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Job Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #F0F4F8; min-height: 100vh; padding: 24px; }
+        .wrapper { max-width: 900px; margin: 0 auto; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .logo { font-size: 20px; font-weight: 600; color: #1B4332; }
+        .topbar-right { display: flex; gap: 10px; align-items: center; }
+        .user-name { font-size: 13px; color: #6B7280; }
+        .btn { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; border: none; }
+        .btn-primary { background: #2D6A4F; color: white; }
+        .btn-primary:hover { background: #1B4332; }
+        .btn-outline { background: white; color: #2D6A4F; border: 1.5px solid #2D6A4F; }
+        .btn-outline:hover { background: #F0FDF4; }
+        .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+        .stat-card { background: white; border-radius: 12px; padding: 16px; border: 0.5px solid #E5E7EB; text-align: center; }
+        .stat-num { font-size: 28px; font-weight: 600; margin-bottom: 4px; }
+        .stat-label { font-size: 11px; color: #6B7280; text-transform: uppercase; letter-spacing: 0.05em; }
+        .total { color: #1B4332; }
+        .applied { color: #185FA5; }
+        .interview { color: #854F0B; }
+        .offer { color: #3B6D11; }
+        .rejected { color: #A32D2D; }
+        .section-title { font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 12px; }
+        .job-card { background: white; border-radius: 12px; padding: 18px 20px; border: 0.5px solid #E5E7EB; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .job-left { flex: 1; }
+        .job-company { font-size: 15px; font-weight: 500; color: #1B4332; margin-bottom: 3px; }
+        .job-role { font-size: 13px; color: #6B7280; margin-bottom: 6px; }
+        .job-meta { display: flex; gap: 10px; flex-wrap: wrap; }
+        .meta-tag { font-size: 11px; color: #6B7280; background: #F3F4F6; border-radius: 4px; padding: 2px 8px; }
+        .job-right { display: flex; gap: 8px; align-items: center; flex-shrink: 0; margin-left: 16px; }
+        .status-badge { font-size: 11px; font-weight: 500; border-radius: 20px; padding: 3px 10px; }
+        .s-Applied { background: #E6F1FB; color: #185FA5; }
+        .s-Test { background: #F3E8FB; color: #7B2FA8; }
+        .s-Interview { background: #FAEEDA; color: #854F0B; }
+        .s-Offer { background: #EAF3DE; color: #3B6D11; }
+        .s-Rejected { background: #FCEBEB; color: #A32D2D; }
+        .delete-btn { font-size: 12px; color: #A32D2D; text-decoration: none; background: #FCEBEB; padding: 4px 10px; border-radius: 6px; }
+        .empty { text-align: center; padding: 48px; color: #9CA3AF; font-size: 14px; }
+        select { padding: 4px 8px; border: 1px solid #E5E7EB; border-radius: 6px; font-size: 12px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="topbar">
+            <div class="logo">📋 Job Tracker</div>
+            <div class="topbar-right">
+                <span class="user-name">Hi, {{ current_user.name }} 👋</span>
+                <a href="/add" class="btn btn-primary">+ Add Job</a>
+                <a href="/logout" class="btn btn-outline">Logout</a>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-num total">{{ total }}</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num applied">{{ applied }}</div>
+                <div class="stat-label">Applied</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num interview">{{ interview }}</div>
+                <div class="stat-label">Interview</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num offer">{{ offer }}</div>
+                <div class="stat-label">Offer</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num rejected">{{ rejected }}</div>
+                <div class="stat-label">Rejected</div>
+            </div>
+        </div>
+
+        <div class="section-title">Your Applications ({{ total }})</div>
+
+        {% if jobs %}
+            {% for job in jobs %}
+            <div class="job-card">
+                <div class="job-left">
+                    <div class="job-company">{{ job.company }}</div>
+                    <div class="job-role">{{ job.role }}</div>
+                    <div class="job-meta">
+                        {% if job.ctc %}<span class="meta-tag">💰 {{ job.ctc }}</span>{% endif %}
+                        {% if job.location %}<span class="meta-tag">📍 {{ job.location }}</span>{% endif %}
+                        {% if job.skills %}<span class="meta-tag">🛠 {{ job.skills[:40] }}</span>{% endif %}
+                        <span class="meta-tag">📅 {{ job.date_added.strftime('%d %b %Y') }}</span>
+                    </div>
+                </div>
+                <div class="job-right">
+                    <span class="status-badge s-{{ job.status }}">{{ job.status }}</span>
+                    <form method="POST" action="/update/{{ job.id }}" style="display:inline">
+                        <select name="status" onchange="this.form.submit()">
+                            <option value="Applied" {% if job.status == 'Applied' %}selected{% endif %}>Applied</option>
+                            <option value="Test" {% if job.status == 'Test' %}selected{% endif %}>Test</option>
+                            <option value="Interview" {% if job.status == 'Interview' %}selected{% endif %}>Interview</option>
+                            <option value="Offer" {% if job.status == 'Offer' %}selected{% endif %}>Offer</option>
+                            <option value="Rejected" {% if job.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                        </select>
+                    </form>
+                    <a href="/delete/{{ job.id }}" class="delete-btn" onclick="return confirm('Delete this job?')">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty">
+                No jobs added yet.<br>Click "+ Add Job" to start tracking your applications!
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

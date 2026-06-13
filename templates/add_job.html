@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Job | Job Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #F0F4F8;
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .wrapper { width: 100%; max-width: 560px; padding: 20px 0; }
+        .header { margin-bottom: 20px; }
+        .back { font-size: 13px; color: #2D6A4F; text-decoration: none; font-weight: 500; }
+        h1 { font-size: 22px; font-weight: 600; color: #1B4332; margin-top: 8px; }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            border: 0.5px solid #D1D5DB;
+        }
+        label { display: block; font-size: 12px; font-weight: 500; color: #374151; margin-bottom: 5px; }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Segoe UI', sans-serif;
+            outline: none;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+            background: #FAFAFA;
+        }
+        input:focus, select:focus, textarea:focus { border-color: #2D6A4F; background: white; }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2D6A4F;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        button:hover { background: #1B4332; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <a href="/dashboard" class="back">← Back to Dashboard</a>
+            <h1>Add New Job</h1>
+        </div>
+
+        <div class="card">
+            <form method="POST">
+                <div class="row">
+                    <div>
+                        <label>Company Name</label>
+                        <input type="text" name="company" placeholder="TCS, Infosys..." required>
+                    </div>
+                    <div>
+                        <label>Role</label>
+                        <input type="text" name="role" placeholder="Python Developer" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        <label>CTC (LPA)</label>
+                        <input type="text" name="ctc" placeholder="3.5 LPA">
+                    </div>
+                    <div>
+                        <label>Location</label>
+                        <input type="text" name="location" placeholder="Hyderabad">
+                    </div>
+                </div>
+
+                <label>Required Skills</label>
+                <input type="text" name="skills" placeholder="Python, Flask, SQL, Git">
+
+                <label>Status</label>
+                <select name="status">
+                    <option value="Applied">Applied</option>
+                    <option value="Test">Online Test</option>
+                    <option value="Interview">Interview</option>
+                    <option value="Offer">Offer</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+
+                <label>Notes</label>
+                <textarea name="notes" rows="3" placeholder="Any notes about this application..."></textarea>
+
+                <button type="submit">Add Job →</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
