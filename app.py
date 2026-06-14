@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, User, Job
 from dotenv import load_dotenv
+from ai_extractor import extract_job_details
 import os
 
 load_dotenv()
@@ -114,6 +115,14 @@ def delete_job(job_id):
     db.session.delete(job)
     db.session.commit()
     return redirect(url_for('dashboard'))
+
+@app.route('/extract', methods=['POST'])
+@login_required
+def extract():
+    data = request.get_json()
+    job_description = data.get('job_description', '')
+    result = extract_job_details(job_description)
+    return jsonify(result)
 
 if __name__ == '__main__':
     with app.app_context():

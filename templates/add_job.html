@@ -15,16 +15,12 @@
             align-items: flex-start;
             justify-content: center;
         }
-        .wrapper { width: 100%; max-width: 560px; padding: 20px 0; }
+        .wrapper { width: 100%; max-width: 600px; padding: 20px 0; }
         .header { margin-bottom: 20px; }
         .back { font-size: 13px; color: #2D6A4F; text-decoration: none; font-weight: 500; }
         h1 { font-size: 22px; font-weight: 600; color: #1B4332; margin-top: 8px; }
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 28px;
-            border: 0.5px solid #D1D5DB;
-        }
+        .card { background: white; border-radius: 16px; padding: 28px; border: 0.5px solid #D1D5DB; margin-bottom: 12px; }
+        .card-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: #2D6A4F; margin-bottom: 12px; }
         label { display: block; font-size: 12px; font-weight: 500; color: #374151; margin-bottom: 5px; }
         input, select, textarea {
             width: 100%;
@@ -40,7 +36,20 @@
         }
         input:focus, select:focus, textarea:focus { border-color: #2D6A4F; background: white; }
         .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        button {
+        .ai-btn {
+            width: 100%;
+            padding: 11px;
+            background: #1B4332;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+        .ai-btn:hover { background: #0A2E1F; }
+        .submit-btn {
             width: 100%;
             padding: 12px;
             background: #2D6A4F;
@@ -51,7 +60,17 @@
             font-weight: 500;
             cursor: pointer;
         }
-        button:hover { background: #1B4332; }
+        .submit-btn:hover { background: #1B4332; }
+        .ai-badge {
+            display: inline-block;
+            font-size: 11px;
+            background: #EAF3DE;
+            color: #3B6D11;
+            border-radius: 20px;
+            padding: 2px 8px;
+            margin-left: 6px;
+        }
+        .loading { display: none; font-size: 12px; color: #6B7280; margin-top: 6px; }
     </style>
 </head>
 <body>
@@ -61,32 +80,48 @@
             <h1>Add New Job</h1>
         </div>
 
+        <!-- AI Extractor Card -->
         <div class="card">
+            <div class="card-label">
+                Step 1 — AI Auto-fill
+                <span class="ai-badge">Gemini AI</span>
+            </div>
+            <label>Paste Job Description</label>
+            <textarea id="job_desc_input" rows="5" placeholder="Paste the full job description here — AI will automatically extract company, role, skills, CTC and location..."></textarea>
+            <button type="button" class="ai-btn" onclick="extractDetails()">
+                Extract Details with AI →
+            </button>
+            <div class="loading" id="loading">⏳ AI is extracting details...</div>
+        </div>
+
+        <!-- Manual Form Card -->
+        <div class="card">
+            <div class="card-label">Step 2 — Review and Submit</div>
             <form method="POST">
                 <div class="row">
                     <div>
                         <label>Company Name</label>
-                        <input type="text" name="company" placeholder="TCS, Infosys..." required>
+                        <input type="text" name="company" id="company" placeholder="TCS, Infosys..." required>
                     </div>
                     <div>
                         <label>Role</label>
-                        <input type="text" name="role" placeholder="Python Developer" required>
+                        <input type="text" name="role" id="role" placeholder="Python Developer" required>
                     </div>
                 </div>
 
                 <div class="row">
                     <div>
                         <label>CTC (LPA)</label>
-                        <input type="text" name="ctc" placeholder="3.5 LPA">
+                        <input type="text" name="ctc" id="ctc" placeholder="3.5 LPA">
                     </div>
                     <div>
                         <label>Location</label>
-                        <input type="text" name="location" placeholder="Hyderabad">
+                        <input type="text" name="location" id="location" placeholder="Hyderabad">
                     </div>
                 </div>
 
                 <label>Required Skills</label>
-                <input type="text" name="skills" placeholder="Python, Flask, SQL, Git">
+                <input type="text" name="skills" id="skills" placeholder="Python, Flask, SQL, Git">
 
                 <label>Status</label>
                 <select name="status">
@@ -100,9 +135,42 @@
                 <label>Notes</label>
                 <textarea name="notes" rows="3" placeholder="Any notes about this application..."></textarea>
 
-                <button type="submit">Add Job →</button>
+                <button type="submit" class="submit-btn">Add Job →</button>
             </form>
         </div>
     </div>
+
+    <script>
+        async function extractDetails() {
+            const jobDesc = document.getElementById('job_desc_input').value;
+            if (!jobDesc.trim()) {
+                alert('Please paste a job description first!');
+                return;
+            }
+
+            document.getElementById('loading').style.display = 'block';
+
+            try {
+                const response = await fetch('/extract', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ job_description: jobDesc })
+                });
+
+                const data = await response.json();
+
+                document.getElementById('company').value = data.company || '';
+                document.getElementById('role').value = data.role || '';
+                document.getElementById('skills').value = data.skills || '';
+                document.getElementById('ctc').value = data.ctc || '';
+                document.getElementById('location').value = data.location || '';
+
+            } catch (error) {
+                alert('AI extraction failed. Please fill manually.');
+            }
+
+            document.getElementById('loading').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
