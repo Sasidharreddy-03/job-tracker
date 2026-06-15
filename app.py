@@ -62,13 +62,13 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
-
 @app.route('/dashboard')
 @login_required
 def dashboard():
     jobs = Job.query.filter_by(user_id=current_user.id).all()
     total = len(jobs)
     applied = len([j for j in jobs if j.status == 'Applied'])
+    test = len([j for j in jobs if j.status == 'Test'])
     interview = len([j for j in jobs if j.status == 'Interview'])
     offer = len([j for j in jobs if j.status == 'Offer'])
     rejected = len([j for j in jobs if j.status == 'Rejected'])
@@ -76,6 +76,7 @@ def dashboard():
         jobs=jobs,
         total=total,
         applied=applied,
+        test=test,
         interview=interview,
         offer=offer,
         rejected=rejected
