@@ -2,7 +2,10 @@
 
 A full-stack web app to track your entire placement journey — from application to offer. Built specifically for Indian students navigating campus and off-campus placements.
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fba8f9fdff38a89ca4e6372b4b1d6c38e9f7cf62
 ## The Problem
 
 During placement season, students apply to dozens of companies across spreadsheets, notes apps, and memory. There's no easy way to track application status, see patterns in rejections, or visualize progress — until now.
