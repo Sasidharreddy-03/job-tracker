@@ -2,8 +2,6 @@
 
 A full-stack web app to track your entire placement journey — from application to offer. Built specifically for Indian students navigating campus and off-campus placements.
 
-## Live Demo
-🔗 [Add your live link here after deploying]
 
 ## The Problem
 
@@ -57,3 +55,14 @@ pip install -r requirements.txt
 ```
 
 Create a `.env` file:
+
+MISTRAL_API_KEY=your_key_here
+
+Run the app:
+```bash
+python app.py
+```
+
+## Author
+
+Sasidhar Reddy — [LinkedIn](https://www.linkedin.com/in/sasidhar-chinthakunta?utm_source=share_via&utm_content=profile&utm_medium=member_android) | [GitHub](https://github.com/Sasidharreddy-03)
