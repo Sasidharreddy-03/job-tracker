@@ -44,24 +44,6 @@ During placement season, students apply to dozens of companies across spreadshee
 ### Add Job with AI Extraction
 ![Add Job](screenshots/addjob.png)
 
-## Run Locally
-
-```bash
-git clone https://github.com/Sasidharreddy-03/job-tracker.git
-cd job-tracker
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-Create a `.env` file:
-
-MISTRAL_API_KEY=your_key_here
-
-Run the app:
-```bash
-python app.py
-```
 
 ## Author
 
