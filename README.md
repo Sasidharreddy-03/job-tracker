@@ -18,11 +18,11 @@ During placement season, students apply to dozens of companies across spreadshee
 ## Tech Stack
 
 - **Backend:** Python, Flask
-- **Database:** SQLite with SQLAlchemy ORM
+- **Database:** MySQL with SQLAlchemy ORM
 - **Authentication:** Flask-Login with hashed passwords
 - **AI:** Mistral AI API for job description parsing
 - **Frontend:** HTML, CSS, JavaScript, Chart.js
-- **Deployment:** Render
+- **Deployment:** Local (MySQL connection)
 
 ## How It Works
 
@@ -42,6 +42,26 @@ During placement season, students apply to dozens of companies across spreadshee
 
 ### Add Job with AI Extraction
 ![Add Job](screenshots/addjob.png)
+
+## Run Locally
+
+Create a `.env` file:
+MISTRAL_API_KEY=your_key_here
+
+DB_USER=root
+
+DB_PASSWORD=your_mysql_password
+
+DB_HOST=localhost
+
+DB_NAME=job_tracker
+
+SECRET_KEY=your_secret_key
+
+Create the MySQL database:
+```sql
+CREATE DATABASE job_tracker;
+```
 
 
 ## Author
