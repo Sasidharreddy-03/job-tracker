@@ -1,4 +1,4 @@
-# 📋 Job Tracker
+# Job Tracker
 
 A full-stack web app to track your entire placement journey — from application to offer. Built specifically for Indian students navigating campus and off-campus placements.
 
@@ -8,12 +8,12 @@ During placement season, students apply to dozens of companies across spreadshee
 
 ## Features
 
-- 🔐 **User Authentication** — secure login and registration with password hashing
-- 🤖 **AI-Powered Job Extraction** — paste any job description and Mistral AI automatically extracts company, role, skills, CTC, and location
-- 📊 **Visual Dashboard** — bar chart showing application status breakdown and doughnut chart showing offer rate
-- ✏️ **Status Tracking** — move jobs through Applied → Test → Interview → Offer/Rejected
-- 🔒 **Private Data** — each user only sees their own applications
-- 📝 **Notes** — add personal notes to each application
+- **User Authentication** — secure login and registration with password hashing
+- **AI-Powered Job Extraction** — paste any job description and Mistral AI automatically extracts company, role, skills, CTC, and location
+- **Visual Dashboard** — bar chart showing application status breakdown and doughnut chart showing offer rate
+- **Status Tracking** — move jobs through Applied → Test → Interview → Offer/Rejected
+- **Private Data** — each user only sees their own applications
+- **Notes** — add personal notes to each application
 
 ## Tech Stack
 
