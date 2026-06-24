@@ -1,4 +1,4 @@
-# Job Tracker
+# 📋 Job Tracker
 
 A full-stack web app to track your entire placement journey — from application to offer. Built specifically for Indian students navigating campus and off-campus placements.
 
@@ -8,12 +8,12 @@ During placement season, students apply to dozens of companies across spreadshee
 
 ## Features
 
-- **User Authentication** — secure login and registration with password hashing
-- **AI-Powered Job Extraction** — paste any job description and Mistral AI automatically extracts company, role, skills, CTC, and location
-- **Visual Dashboard** — bar chart showing application status breakdown and doughnut chart showing offer rate
-- **Status Tracking** — move jobs through Applied → Test → Interview → Offer/Rejected
-- **Private Data** — each user only sees their own applications
-- **Notes** — add personal notes to each application
+- 🔐 **User Authentication** — secure login and registration with password hashing
+- 🤖 **AI-Powered Job Extraction** — paste any job description and Mistral AI automatically extracts company, role, skills, CTC, and location
+- 📊 **Visual Dashboard** — bar chart showing application status breakdown and doughnut chart showing offer rate
+- ✏️ **Status Tracking** — move jobs through Applied → Test → Interview → Offer/Rejected
+- 🔒 **Private Data** — each user only sees their own applications
+- 📝 **Notes** — add personal notes to each application
 
 ## Tech Stack
 
@@ -22,7 +22,6 @@ During placement season, students apply to dozens of companies across spreadshee
 - **Authentication:** Flask-Login with hashed passwords
 - **AI:** Mistral AI API for job description parsing
 - **Frontend:** HTML, CSS, JavaScript, Chart.js
-- **Deployment:** Local (MySQL connection)
 
 ## How It Works
 
@@ -45,25 +44,44 @@ During placement season, students apply to dozens of companies across spreadshee
 
 ## Run Locally
 
-Create a `.env` file:
-MISTRAL_API_KEY=your_key_here
+Clone the repository:
+```bash
+git clone https://github.com/Sasidharreddy-03/job-tracker.git
+cd job-tracker
+```
 
-DB_USER=root
+Create a virtual environment:
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
 
-DB_PASSWORD=your_mysql_password
+Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-DB_HOST=localhost
-
-DB_NAME=job_tracker
-
-SECRET_KEY=your_secret_key
-
-Create the MySQL database:
+Create a MySQL database:
 ```sql
 CREATE DATABASE job_tracker;
 ```
 
+Create a `.env` file in the root folder:
+```
+MISTRAL_API_KEY=your_mistral_api_key
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_HOST=localhost
+DB_NAME=job_tracker
+SECRET_KEY=your_secret_key
+```
+
+Run the app:
+```bash
+python app.py
+```
+Open `http://127.0.0.1:5000` in your browser.
 
 ## Author
 
-Sasidhar Reddy — [LinkedIn](https://www.linkedin.com/in/sasidhar-chinthakunta?utm_source=share_via&utm_content=profile&utm_medium=member_android) | [GitHub](https://github.com/Sasidharreddy-03)
+Sasidhar Reddy — [LinkedIn](https://www.linkedin.com/in/sasidhar-chinthakunta) | [GitHub](https://github.com/Sasidharreddy-03)
